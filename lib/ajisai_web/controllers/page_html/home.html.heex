@@ -1,16 +1,20 @@
 <.flash_group flash={@flash} />
-<header>
-  <nav class="py-1 px-4 flex items-center justify-between border-b border-solid border-gray-300">
-    <div class="flex flex-1 items-center">
-      <img src="/icon.svg" width="50" />
-      <p><span class="font-bold">Ajisai</span> Issue Tracker</p>
+<header class="px-4 sm:px-6 lg:px-8">
+  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
+    <div class="flex items-center gap-4">
+      <a href="/">
+        <img src={~p"/icon.svg"} width="36" />
+      </a>
+      <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
+        Ajisai Issue Tracker
+      </p>
     </div>
-    <div class="flex gap-x-12">
-      <div><a href="#">Projects</a></div>
-      <div><a href="#">Issues</a></div>
+    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
+      <a href="/issues" class="hover:text-zinc-700 hover:underline">
+        Issues
+      </a>
     </div>
-    <div class="flex flex-1 justify-end"></div>
-  </nav>
+  </div>
 </header>
 <main>
   <p>Dashboard</p>
