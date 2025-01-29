@@ -7,8 +7,8 @@ defmodule AjisaiWeb.IssueLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
-    socket
-    |> stream(:issues, Plan.list_issues())}
+     socket
+     |> stream(:issues, Plan.list_issues())}
   end
 
   @impl true

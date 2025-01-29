@@ -29,7 +29,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="issue-modal" show on_cancel={JS.patch(~p"/issues")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="issue-modal"
+  show
+  on_cancel={JS.patch(~p"/issues")}
+>
   <.live_component
     module={AjisaiWeb.IssueLive.FormComponent}
     id={@issue.id || :new}
