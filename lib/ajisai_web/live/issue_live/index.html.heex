@@ -1,0 +1,41 @@
+<.header>
+  Listing Issues
+  <:actions>
+    <.link patch={~p"/issues/new"}>
+      <.button>New Issue</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="issues"
+  rows={@streams.issues}
+  row_click={fn {_id, issue} -> JS.navigate(~p"/issues/#{issue}") end}
+>
+  <:col :let={{_id, issue}} label="Title">{issue.title}</:col>
+  <:action :let={{_id, issue}}>
+    <div class="sr-only">
+      <.link navigate={~p"/issues/#{issue}"}>Show</.link>
+    </div>
+    <.link patch={~p"/issues/#{issue}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, issue}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: issue.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="issue-modal" show on_cancel={JS.patch(~p"/issues")}>
+  <.live_component
+    module={AjisaiWeb.IssueLive.FormComponent}
+    id={@issue.id || :new}
+    title={@page_title}
+    action={@live_action}
+    issue={@issue}
+    patch={~p"/issues"}
+  />
+</.modal>

@@ -18,6 +18,13 @@ defmodule AjisaiWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/issues", IssueLive.Index, :index
+    live "/issues/new", IssueLive.Index, :new
+    live "/issues/:id/edit", IssueLive.Index, :edit
+
+    live "/issues/:id", IssueLive.Show, :show
+    live "/issues/:id/show/edit", IssueLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
