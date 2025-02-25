@@ -3,7 +3,7 @@ defmodule Ajisai.Plan.Issue do
   import Ecto.Changeset
   import Ajisai.Validateion
 
-  @primary_key {:id, Ajisai.Plan.Issue.Id, autogenerate: true}
+  @primary_key {:id, Ajisai.Id, autogenerate: true, prefix: "iss_"}
   schema "issues" do
     field :title, :string, default: ""
     field :description, :string, default: ""
