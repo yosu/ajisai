@@ -3,6 +3,7 @@ defmodule AjisaiWeb.IssueLive.Index do
 
   alias Ajisai.Plan
   alias Ajisai.Plan.Issue
+  alias AjisaiWeb.IssueLive.IssueList
 
   @impl true
   def mount(_params, _session, socket) do

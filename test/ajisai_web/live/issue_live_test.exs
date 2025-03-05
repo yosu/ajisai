@@ -44,7 +44,7 @@ defmodule AjisaiWeb.IssueLiveTest do
     test "updates issue in listing", %{conn: conn, issue: issue} do
       {:ok, index_live, _html} = live(conn, ~p"/issues")
 
-      assert index_live |> element("#issues-#{issue.id} a", "Edit") |> render_click() =~
+      assert index_live |> element("##{issue.id} a[data-test=edit]") |> render_click() =~
                "Edit Issue"
 
       assert_patch(index_live, ~p"/issues/#{issue}/edit")
@@ -63,7 +63,7 @@ defmodule AjisaiWeb.IssueLiveTest do
     test "deletes issue in listing", %{conn: conn, issue: issue} do
       {:ok, index_live, _html} = live(conn, ~p"/issues")
 
-      assert index_live |> element("#issues-#{issue.id} a", "Delete") |> render_click()
+      assert index_live |> element("##{issue.id} a[data-test=delete]") |> render_click()
       refute has_element?(index_live, "#issues-#{issue.id}")
     end
   end

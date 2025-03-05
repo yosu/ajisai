@@ -7,27 +7,7 @@
   </:actions>
 </.header>
 
-<.table
-  id="issues"
-  rows={@streams.issues}
-  row_click={fn {_id, issue} -> JS.navigate(~p"/issues/#{issue}") end}
->
-  <:col :let={{_id, issue}} label="Title">{issue.title}</:col>
-  <:action :let={{_id, issue}}>
-    <div class="sr-only">
-      <.link navigate={~p"/issues/#{issue}"}>Show</.link>
-    </div>
-    <.link patch={~p"/issues/#{issue}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, issue}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: issue.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
+<IssueList.issue_list issues={@streams.issues} />
 
 <.modal
   :if={@live_action in [:new, :edit]}
