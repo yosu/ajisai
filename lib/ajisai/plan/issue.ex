@@ -6,6 +6,7 @@ defmodule Ajisai.Plan.Issue do
   @primary_key {:id, Ajisai.Id, autogenerate: true, prefix: "iss_"}
   schema "issues" do
     field :title, :string, default: ""
+    field :status, Ecto.Enum, values: [:active, :closed], default: :active
 
     timestamps(type: :utc_datetime)
   end
@@ -13,7 +14,7 @@ defmodule Ajisai.Plan.Issue do
   @doc false
   def changeset(issue, attrs) do
     issue
-    |> cast(attrs, [:title])
-    |> validate_not_nil([:title])
+    |> cast(attrs, [:title, :status])
+    |> validate_not_nil([:title, :status])
   end
 end

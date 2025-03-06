@@ -12,7 +12,8 @@ defmodule Ajisai.PlanFixtures do
       attrs
       |> Enum.into(%{
         issue_id: Ajisai.Id.autogenerate(%{prefix: "iss_"}),
-        title: "some title"
+        title: "some title",
+        status: :active
       })
       |> Ajisai.Plan.create_issue()
 

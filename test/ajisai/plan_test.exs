@@ -21,7 +21,7 @@ defmodule Ajisai.PlanTest do
     end
 
     test "create_issue/1 with valid data creates a issue" do
-      valid_attrs = %{title: "some title"}
+      valid_attrs = %{title: "some title", status: :active}
 
       assert {:ok, %Issue{} = issue} = Plan.create_issue(valid_attrs)
       assert issue.title == "some title"
