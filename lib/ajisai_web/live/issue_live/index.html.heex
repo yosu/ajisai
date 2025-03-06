@@ -1,13 +1,14 @@
 <.header>
-  Listing Issues
   <:actions>
     <.link patch={~p"/issues/new"}>
-      <.button>New Issue</.button>
+      <.button class="bg-blue-600"><.icon name="hero-pencil-square" /></.button>
     </.link>
   </:actions>
 </.header>
 
-<IssueList.issue_list issues={@streams.issues} />
+<div class="mt-2">
+  <IssueList.issue_list issues={@streams.issues} />
+</div>
 
 <.modal
   :if={@live_action in [:new, :edit]}

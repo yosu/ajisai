@@ -15,13 +15,13 @@ defmodule AjisaiWeb.IssueLive.IssueList do
 
   defp issue_item(assigns) do
     ~H"""
-    <li id={@issue.id}>
+    <li id={@issue.id} class="mb-1">
       <.link
         phx-click={JS.push("delete", value: %{id: @issue.id}) |> hide("##{@issue.id}")}
-        data-confirm={"Are you sure?\n#{@issue.title}"}
+        data-confirm={"本当に削除しますか？\n「#{@issue.title}」"}
         data-test="delete"
       >
-        <.icon name="hero-archive-box-x-mark" />
+        <.icon name="hero-archive-box-x-mark" class="bg-green-600" />
       </.link>
       <.link patch={~p"/issues/#{@issue}/edit"} data-test="edit">
         {@issue.title}
