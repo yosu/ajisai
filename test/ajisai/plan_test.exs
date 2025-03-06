@@ -8,7 +8,7 @@ defmodule Ajisai.PlanTest do
 
     import Ajisai.PlanFixtures
 
-    @invalid_attrs %{description: nil, title: nil}
+    @invalid_attrs %{title: nil}
 
     test "list_issues/0 returns all issues" do
       issue = issue_fixture()
@@ -21,10 +21,9 @@ defmodule Ajisai.PlanTest do
     end
 
     test "create_issue/1 with valid data creates a issue" do
-      valid_attrs = %{description: "some description", title: "some title"}
+      valid_attrs = %{title: "some title"}
 
       assert {:ok, %Issue{} = issue} = Plan.create_issue(valid_attrs)
-      assert issue.description == "some description"
       assert issue.title == "some title"
     end
 
@@ -34,10 +33,9 @@ defmodule Ajisai.PlanTest do
 
     test "update_issue/2 with valid data updates the issue" do
       issue = issue_fixture()
-      update_attrs = %{description: "some updated description", title: "some updated title"}
+      update_attrs = %{title: "some updated title"}
 
       assert {:ok, %Issue{} = issue} = Plan.update_issue(issue, update_attrs)
-      assert issue.description == "some updated description"
       assert issue.title == "some updated title"
     end
 

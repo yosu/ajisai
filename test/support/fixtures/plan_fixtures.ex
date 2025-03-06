@@ -11,7 +11,6 @@ defmodule Ajisai.PlanFixtures do
     {:ok, issue} =
       attrs
       |> Enum.into(%{
-        description: "some description",
         issue_id: Ajisai.Id.autogenerate(%{prefix: "iss_"}),
         title: "some title"
       })

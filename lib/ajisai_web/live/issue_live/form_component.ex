@@ -20,7 +20,6 @@ defmodule AjisaiWeb.IssueLive.FormComponent do
       >
         <!--.input field={@form[:id]} type="text" label="Issue" /-->
         <.input field={@form[:title]} type="text" label="タイトル" />
-        <.input field={@form[:description]} type="text" label="説明" />
         <:actions>
           <.button phx-disable-with="保存中...">保存</.button>
         </:actions>

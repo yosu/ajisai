@@ -4,8 +4,8 @@ defmodule AjisaiWeb.IssueLiveTest do
   import Phoenix.LiveViewTest
   import Ajisai.PlanFixtures
 
-  @create_attrs %{description: "some description", title: "some title"}
-  @update_attrs %{description: "some updated description", title: "some updated title"}
+  @create_attrs %{title: "some title"}
+  @update_attrs %{title: "some updated title"}
 
   defp create_issue(_) do
     issue = issue_fixture()
@@ -18,15 +18,15 @@ defmodule AjisaiWeb.IssueLiveTest do
     test "lists all issues", %{conn: conn, issue: issue} do
       {:ok, _index_live, html} = live(conn, ~p"/issues")
 
-      assert html =~ "Listing Issues"
+      assert html =~ "イシュー一覧"
       assert html =~ issue.title
     end
 
     test "saves new issue", %{conn: conn} do
       {:ok, index_live, _html} = live(conn, ~p"/issues")
 
-      assert index_live |> element("a", "New Issue") |> render_click() =~
-               "New Issue"
+      assert index_live |> element("a[data-test=new]") |> render_click() =~
+               "新規作成"
 
       assert_patch(index_live, ~p"/issues/new")
 
@@ -37,7 +37,7 @@ defmodule AjisaiWeb.IssueLiveTest do
       assert_patch(index_live, ~p"/issues")
 
       html = render(index_live)
-      assert html =~ "Issue created successfully"
+      assert html =~ "作成に成功しました"
       assert html =~ "some title"
     end
 
@@ -45,7 +45,7 @@ defmodule AjisaiWeb.IssueLiveTest do
       {:ok, index_live, _html} = live(conn, ~p"/issues")
 
       assert index_live |> element("##{issue.id} a[data-test=edit]") |> render_click() =~
-               "Edit Issue"
+               "編集"
 
       assert_patch(index_live, ~p"/issues/#{issue}/edit")
 
@@ -56,7 +56,7 @@ defmodule AjisaiWeb.IssueLiveTest do
       assert_patch(index_live, ~p"/issues")
 
       html = render(index_live)
-      assert html =~ "Issue updated successfully"
+      assert html =~ "更新に成功しました"
       assert html =~ "some updated title"
     end
 
@@ -65,36 +65,6 @@ defmodule AjisaiWeb.IssueLiveTest do
 
       assert index_live |> element("##{issue.id} a[data-test=delete]") |> render_click()
       refute has_element?(index_live, "#issues-#{issue.id}")
-    end
-  end
-
-  describe "Show" do
-    setup [:create_issue]
-
-    test "displays issue", %{conn: conn, issue: issue} do
-      {:ok, _show_live, html} = live(conn, ~p"/issues/#{issue}")
-
-      assert html =~ "Show Issue"
-      assert html =~ issue.description
-    end
-
-    test "updates issue within modal", %{conn: conn, issue: issue} do
-      {:ok, show_live, _html} = live(conn, ~p"/issues/#{issue}")
-
-      assert show_live |> element("a", "Edit") |> render_click() =~
-               "Edit Issue"
-
-      assert_patch(show_live, ~p"/issues/#{issue}/show/edit")
-
-      assert show_live
-             |> form("#issue-form", issue: @update_attrs)
-             |> render_submit()
-
-      assert_patch(show_live, ~p"/issues/#{issue}")
-
-      html = render(show_live)
-      assert html =~ "Issue updated successfully"
-      assert html =~ "some updated title"
     end
   end
 end
