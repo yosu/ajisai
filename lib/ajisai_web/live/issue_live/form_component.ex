@@ -9,7 +9,6 @@ defmodule AjisaiWeb.IssueLive.FormComponent do
     <div>
       <.header>
         {@title}
-        <:subtitle>Use this form to manage issue records in your database.</:subtitle>
       </.header>
 
       <.simple_form
@@ -20,10 +19,10 @@ defmodule AjisaiWeb.IssueLive.FormComponent do
         phx-submit="save"
       >
         <!--.input field={@form[:id]} type="text" label="Issue" /-->
-        <.input field={@form[:title]} type="text" label="Title" />
-        <.input field={@form[:description]} type="text" label="Description" />
+        <.input field={@form[:title]} type="text" label="タイトル" />
+        <.input field={@form[:description]} type="text" label="説明" />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Issue</.button>
+          <.button phx-disable-with="保存中...">保存</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -57,7 +56,7 @@ defmodule AjisaiWeb.IssueLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Issue updated successfully")
+         |> put_flash(:info, "更新に成功しました")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -72,7 +71,7 @@ defmodule AjisaiWeb.IssueLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Issue created successfully")
+         |> put_flash(:info, "作成に成功しました")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

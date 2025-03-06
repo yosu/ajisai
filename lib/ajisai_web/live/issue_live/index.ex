@@ -19,19 +19,19 @@ defmodule AjisaiWeb.IssueLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Issue")
+    |> assign(:page_title, "編集")
     |> assign(:issue, Plan.get_issue!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Issue")
+    |> assign(:page_title, "新規作成")
     |> assign(:issue, %Issue{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Issues")
+    |> assign(:page_title, "イシュー一覧")
     |> assign(:issue, nil)
   end
 
