@@ -12,7 +12,20 @@ defmodule Ajisai.PlanTest do
 
     test "list_issues/0 returns all issues" do
       issue = issue_fixture()
-      assert Plan.list_issues() == [issue]
+      closed_issue = issue_fixture(%{status: :closed})
+      assert Plan.list_issues() == [issue, closed_issue]
+    end
+
+    test "active_issues/0 returns only active issues" do
+      active_issue = issue_fixture(%{status: :active})
+      _closed_issue = issue_fixture(%{status: :closed})
+      assert Plan.active_issues() == [active_issue]
+    end
+
+    test "closed_issues/0 returns only closed issues" do
+      _active_issue = issue_fixture(%{status: :active})
+      closed_issue = issue_fixture(%{status: :closed})
+      assert Plan.closed_issues() == [closed_issue]
     end
 
     test "get_issue!/1 returns the issue with given id" do

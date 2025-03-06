@@ -22,6 +22,17 @@ defmodule Ajisai.Plan do
   end
 
   @doc """
+  Returns active issues.
+  """
+  def active_issues do
+    Repo.all(from i in Issue, where: i.status == :active)
+  end
+
+  def closed_issues do
+    Repo.all(from i in Issue, where: i.status == :closed)
+  end
+
+  @doc """
   Gets a single issue.
 
   Raises `Ecto.NoResultsError` if the Issue does not exist.
