@@ -10,6 +10,11 @@
   <IssueList.issue_list issues={@streams.issues} />
 </div>
 
+<div class="mt-10">
+  <h2 class="text-xl mb-2">閉じたイシューリスト</h2>
+  <ClosedIssueList.issue_list issues={@streams.closed_issues} />
+</div>
+
 <.modal
   :if={@live_action in [:new, :edit]}
   id="issue-modal"

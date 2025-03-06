@@ -4,12 +4,14 @@ defmodule AjisaiWeb.IssueLive.Index do
   alias Ajisai.Plan
   alias Ajisai.Plan.Issue
   alias AjisaiWeb.IssueLive.IssueList
+  alias AjisaiWeb.IssueLive.ClosedIssueList
 
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> stream(:issues, Plan.list_issues())}
+     |> stream(:issues, Plan.active_issues())
+     |> stream(:closed_issues, Plan.closed_issues())}
   end
 
   @impl true
