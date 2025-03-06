@@ -56,6 +56,7 @@ defmodule AjisaiWeb do
         layout: {AjisaiWeb.Layouts, :app}
 
       unquote(html_helpers())
+      unquote(flash_helpers())
     end
   end
 
@@ -103,6 +104,14 @@ defmodule AjisaiWeb do
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
+    end
+  end
+
+  defp flash_helpers do
+    quote do
+      def handle_info(:clear_flash, socket) do
+        {:noreply, clear_flash(socket)}
+      end
     end
   end
 
