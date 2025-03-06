@@ -8,10 +8,16 @@ defmodule AjisaiWeb.IssueLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok,
-     socket
-     |> stream(:issues, Plan.active_issues())
-     |> stream(:closed_issues, Plan.closed_issues())}
+    {
+      :ok,
+      # 複数のstreamで同じDOM idを使うとDOMのトラッキングがうまくいかなくなるため、
+      # （片方から消してもう片方から消すということができない）closedとactiveとで
+      # DOM idの系列を分けるようにする。
+      socket
+      |> stream_configure(:closed_issues, dom_id: &"closed-#{&1.id}")
+      |> stream(:issues, Plan.active_issues())
+      |> stream(:closed_issues, Plan.closed_issues())
+    }
   end
 
   @impl true
@@ -48,5 +54,25 @@ defmodule AjisaiWeb.IssueLive.Index do
     {:ok, _} = Plan.delete_issue(issue)
 
     {:noreply, stream_delete(socket, :issues, issue)}
+  end
+
+  def handle_event("close", %{"id" => id}, socket) do
+    issue = Plan.get_issue!(id)
+    {:ok, closed_issue} = Plan.close_issue(issue)
+
+    {:noreply,
+     socket
+     |> stream_delete(:issues, issue)
+     |> stream_insert(:closed_issues, closed_issue)}
+  end
+
+  def handle_event("activate", %{"id" => id}, socket) do
+    closed_issue = Plan.get_issue!(id)
+    {:ok, issue} = Plan.activate_issue(closed_issue)
+
+    {:noreply,
+     socket
+     |> stream_delete(:closed_issues, closed_issue)
+     |> stream_insert(:issues, issue)}
   end
 end

@@ -58,6 +58,18 @@ defmodule Ajisai.PlanTest do
       assert issue == Plan.get_issue!(issue.id)
     end
 
+    test "activate_issue/1 activates a closed issue" do
+      closed_issue = issue_fixture(%{status: :closed})
+      assert {:ok, %Issue{} = issue} = Plan.activate_issue(closed_issue)
+      assert issue.status == :active
+    end
+
+    test "close_issue/1 closes a active issue" do
+      issue = issue_fixture(%{status: :active})
+      assert {:ok, %Issue{} = closed_issue} = Plan.close_issue(issue)
+      assert closed_issue.status == :closed
+    end
+
     test "delete_issue/1 deletes the issue" do
       issue = issue_fixture()
       assert {:ok, %Issue{}} = Plan.delete_issue(issue)

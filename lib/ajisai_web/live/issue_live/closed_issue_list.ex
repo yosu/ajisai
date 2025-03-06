@@ -5,17 +5,21 @@ defmodule AjisaiWeb.IssueLive.ClosedIssueList do
 
   def issue_list(assigns) do
     ~H"""
-    <ul id="issues" phx-update="stream">
-      <.issue_item :for={{_id, issue} <- @issues} issue={issue} />
+    <ul id="closed-issues" phx-update="stream">
+      <.issue_item :for={{dom_id, issue} <- @issues} issue={issue} dom_id={dom_id} />
     </ul>
     """
   end
 
+  attr :dom_id, :string, required: true
   attr :issue, Ajisai.Plan.Issue, required: true
 
   defp issue_item(assigns) do
     ~H"""
-    <li id={@issue.id} class="mb-1">
+    <li id={@dom_id} class="mb-1">
+      <.link phx-click={JS.push("activate", value: %{id: @issue.id}) |> hide("##{@dom_id}")}>
+        <.icon name="hero-arrow-uturn-left" class="bg-blue-600"/>
+      </.link>
       <span class="line-through text-gray-500">{@issue.title}</span>
     </li>
     """

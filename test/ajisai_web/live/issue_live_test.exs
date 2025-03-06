@@ -60,11 +60,11 @@ defmodule AjisaiWeb.IssueLiveTest do
       assert html =~ "some updated title"
     end
 
-    test "deletes issue in listing", %{conn: conn, issue: issue} do
+    test "close issue in listing", %{conn: conn, issue: issue} do
       {:ok, index_live, _html} = live(conn, ~p"/issues")
 
-      assert index_live |> element("##{issue.id} a[data-test=delete]") |> render_click()
-      refute has_element?(index_live, "#issues-#{issue.id}")
+      assert index_live |> element("##{issue.id} a[data-test=close]") |> render_click()
+      assert has_element?(index_live, "#closed-#{issue.id}")
     end
   end
 end

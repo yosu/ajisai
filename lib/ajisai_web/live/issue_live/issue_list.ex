@@ -17,11 +17,10 @@ defmodule AjisaiWeb.IssueLive.IssueList do
     ~H"""
     <li id={@issue.id} class="mb-1">
       <.link
-        phx-click={JS.push("delete", value: %{id: @issue.id}) |> hide("##{@issue.id}")}
-        data-confirm={"本当に削除しますか？\n「#{@issue.title}」"}
-        data-test="delete"
+        phx-click={JS.push("close", value: %{id: @issue.id}) |> hide("##{@issue.id}")}
+        data-test="close"
       >
-        <.icon name="hero-archive-box-x-mark" class="bg-green-600" />
+        <.icon name="hero-archive-box-arrow-down" class="bg-green-600" />
       </.link>
       <.link patch={~p"/issues/#{@issue}/edit"} data-test="edit">
         {@issue.title}

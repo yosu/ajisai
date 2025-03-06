@@ -85,6 +85,21 @@ defmodule Ajisai.Plan do
   end
 
   @doc """
+  Activate a issue.
+  """
+  def activate_issue(%Issue{} = issue) do
+    issue
+    |> Issue.changeset(%{status: :active})
+    |> Repo.update()
+  end
+
+  def close_issue(%Issue{} = issue) do
+    issue
+    |> Issue.changeset(%{status: :closed})
+    |> Repo.update()
+  end
+
+  @doc """
   Deletes a issue.
 
   ## Examples
