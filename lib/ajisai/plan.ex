@@ -116,6 +116,16 @@ defmodule Ajisai.Plan do
   end
 
   @doc """
+  Delete all closed issues.
+  """
+  def delete_closed_issues() do
+    {_count, issues} =
+      from(i in Issue, where: i.status == :closed, select: i) |> Repo.delete_all()
+
+    issues
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking issue changes.
 
   ## Examples

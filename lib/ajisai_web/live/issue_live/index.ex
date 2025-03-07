@@ -75,4 +75,14 @@ defmodule AjisaiWeb.IssueLive.Index do
      |> stream_delete(:closed_issues, closed_issue)
      |> stream_insert(:issues, issue)}
   end
+
+  def handle_event("delete_closed", _value, socket) do
+    deleted_issues = Plan.delete_closed_issues()
+
+    {:noreply,
+     deleted_issues
+     |> Enum.reduce(socket, fn deleted_issue, socket ->
+       stream_delete(socket, :closed_issues, deleted_issue)
+     end)}
+  end
 end

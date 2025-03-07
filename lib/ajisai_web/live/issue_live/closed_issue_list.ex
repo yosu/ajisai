@@ -6,6 +6,9 @@ defmodule AjisaiWeb.IssueLive.ClosedIssueList do
   def issue_list(assigns) do
     ~H"""
     <ul id="closed-issues" phx-update="stream">
+      <li id="closed-issues-menu" class="block only:hidden">
+        <.button phx-click={JS.push("delete_closed")} class="ml-4mt-4 bg-red-400">Clear closed</.button>
+      </li>
       <.issue_item :for={{dom_id, issue} <- @issues} issue={issue} dom_id={dom_id} />
     </ul>
     """
@@ -18,7 +21,7 @@ defmodule AjisaiWeb.IssueLive.ClosedIssueList do
     ~H"""
     <li id={@dom_id} class="mb-1">
       <.link phx-click={JS.push("activate", value: %{id: @issue.id}) |> hide("##{@dom_id}")}>
-        <.icon name="hero-arrow-uturn-left" class="bg-blue-600"/>
+        <.icon name="hero-arrow-uturn-left" class="bg-blue-600" />
       </.link>
       <span class="line-through text-gray-500">{@issue.title}</span>
     </li>

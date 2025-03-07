@@ -18,7 +18,7 @@ defmodule AjisaiWeb.IssueLive.IssueList do
     ~H"""
     <li id={@dom_id} class="mb-1">
       <.link
-        phx-click={JS.push("close", value: %{id: @issue.id}) |> hide("##{@issue.id}")}
+        phx-click={JS.push("close", value: %{id: @issue.id}) |> hide("##{@dom_id}")}
         data-test="close"
       >
         <.icon name="hero-archive-box-arrow-down" class="bg-green-600" />

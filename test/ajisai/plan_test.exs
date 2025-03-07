@@ -76,6 +76,14 @@ defmodule Ajisai.PlanTest do
       assert_raise Ecto.NoResultsError, fn -> Plan.get_issue!(issue.id) end
     end
 
+    test "delete_closed_issues/0 delete all closed issues" do
+      i1 = issue_fixture(%{status: :closed})
+      i2 = issue_fixture(%{status: :closed})
+
+      assert [^i1, ^i2] = Plan.delete_closed_issues()
+      assert [] = Plan.closed_issues()
+    end
+
     test "change_issue/1 returns a issue changeset" do
       issue = issue_fixture()
       assert %Ecto.Changeset{} = Plan.change_issue(issue)
