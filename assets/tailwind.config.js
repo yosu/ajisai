@@ -9,7 +9,7 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/ajisai_web.ex",
-    "../lib/ajisai_web/**/*.*ex"
+    "../lib/ajisai_web/**/*.*ex",
   ],
   theme: {
     extend: {
