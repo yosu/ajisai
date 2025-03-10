@@ -24,12 +24,16 @@ defmodule Ajisai.Plan do
   @doc """
   Returns active issues.
   """
-  def active_issues do
-    Repo.all(from i in Issue, where: i.status == :active)
+  def active_issues_by_user(user) do
+    Issue.Query.active()
+    |> Issue.Query.for_user(user)
+    |> Repo.all()
   end
 
-  def closed_issues do
-    Repo.all(from i in Issue, where: i.status == :closed)
+  def closed_issues_by_user(user) do
+    Issue.Query.closed()
+    |> Issue.Query.for_user(user)
+    |> Repo.all()
   end
 
   @doc """
@@ -116,11 +120,13 @@ defmodule Ajisai.Plan do
   end
 
   @doc """
-  Delete all closed issues.
+  Delete all closed issues with given user.
   """
-  def delete_closed_issues() do
+  def delete_closed_issues_by_user(user) do
     {_count, issues} =
-      from(i in Issue, where: i.status == :closed, select: i) |> Repo.delete_all()
+      Issue.Query.closed()
+      |> Issue.Query.for_user(user)
+      |> select([i], i) |> Repo.delete_all()
 
     issues
   end

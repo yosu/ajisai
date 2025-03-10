@@ -7,6 +7,7 @@ defmodule Ajisai.Plan.Issue do
   schema "issues" do
     field :title, :string, default: ""
     field :status, Ecto.Enum, values: [:active, :closed], default: :active
+    belongs_to :user, Ajisai.Account.User, type: :string
 
     timestamps(type: :utc_datetime)
   end
@@ -14,7 +15,8 @@ defmodule Ajisai.Plan.Issue do
   @doc false
   def changeset(issue, attrs) do
     issue
-    |> cast(attrs, [:title, :status])
+    |> cast(attrs, [:title, :status, :user_id])
     |> validate_not_nil([:title, :status])
+    |> validate_required([:user_id])
   end
 end

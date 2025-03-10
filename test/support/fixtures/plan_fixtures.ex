@@ -3,6 +3,7 @@ defmodule Ajisai.PlanFixtures do
   This module defines test helpers for creating
   entities via the `Ajisai.Plan` context.
   """
+  import Ajisai.AccountFixtures
 
   @doc """
   Generate a issue.
@@ -13,7 +14,8 @@ defmodule Ajisai.PlanFixtures do
       |> Enum.into(%{
         issue_id: Ajisai.Id.autogenerate(%{prefix: "iss_"}),
         title: "some title",
-        status: :active
+        status: :active,
+        user_id: user_fixture().id
       })
       |> Ajisai.Plan.create_issue()
 

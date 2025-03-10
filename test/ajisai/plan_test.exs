@@ -7,6 +7,7 @@ defmodule Ajisai.PlanTest do
     alias Ajisai.Plan.Issue
 
     import Ajisai.PlanFixtures
+    import Ajisai.AccountFixtures
 
     @invalid_attrs %{title: nil}
 
@@ -16,16 +17,18 @@ defmodule Ajisai.PlanTest do
       assert Plan.list_issues() == [issue, closed_issue]
     end
 
-    test "active_issues/0 returns only active issues" do
-      active_issue = issue_fixture(%{status: :active})
-      _closed_issue = issue_fixture(%{status: :closed})
-      assert Plan.active_issues() == [active_issue]
+    test "active_issues_by_user/1 returns active issues with given user" do
+      user = user_fixture()
+      active_issue = issue_fixture(%{status: :active, user_id: user.id})
+      _closed_issue = issue_fixture(%{status: :closed, user_id: user.id})
+      assert Plan.active_issues_by_user(user) == [active_issue]
     end
 
-    test "closed_issues/0 returns only closed issues" do
-      _active_issue = issue_fixture(%{status: :active})
-      closed_issue = issue_fixture(%{status: :closed})
-      assert Plan.closed_issues() == [closed_issue]
+    test "closed_issues_by_user/1 returns closed issues with given user" do
+      user = user_fixture()
+      _active_issue = issue_fixture(%{status: :active, user_id: user.id})
+      closed_issue = issue_fixture(%{status: :closed, user_id: user.id})
+      assert Plan.closed_issues_by_user(user) == [closed_issue]
     end
 
     test "get_issue!/1 returns the issue with given id" do
@@ -34,7 +37,7 @@ defmodule Ajisai.PlanTest do
     end
 
     test "create_issue/1 with valid data creates a issue" do
-      valid_attrs = %{title: "some title", status: :active}
+      valid_attrs = %{title: "some title", status: :active, user_id: user_fixture().id}
 
       assert {:ok, %Issue{} = issue} = Plan.create_issue(valid_attrs)
       assert issue.title == "some title"
@@ -77,11 +80,12 @@ defmodule Ajisai.PlanTest do
     end
 
     test "delete_closed_issues/0 delete all closed issues" do
-      i1 = issue_fixture(%{status: :closed})
-      i2 = issue_fixture(%{status: :closed})
+      user = user_fixture()
+      i1 = issue_fixture(%{status: :closed, user_id: user.id})
+      i2 = issue_fixture(%{status: :closed, user_id: user.id})
 
-      assert [^i1, ^i2] = Plan.delete_closed_issues()
-      assert [] = Plan.closed_issues()
+      assert [^i1, ^i2] = Plan.delete_closed_issues_by_user(user)
+      assert [] = Plan.list_issues()
     end
 
     test "change_issue/1 returns a issue changeset" do

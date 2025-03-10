@@ -7,13 +7,13 @@ defmodule AjisaiWeb.IssueLiveTest do
   @create_attrs %{title: "some title"}
   @update_attrs %{title: "some updated title"}
 
-  defp create_issue(_) do
-    issue = issue_fixture()
+  defp create_issue(%{user: user}) do
+    issue = issue_fixture(%{user_id: user.id})
     %{issue: issue}
   end
 
   describe "Index" do
-    setup [:create_issue, :register_and_log_in_user]
+    setup [:register_and_log_in_user, :create_issue]
 
     test "lists all issues", %{conn: conn, issue: issue} do
       {:ok, _index_live, html} = live(conn, ~p"/issues")

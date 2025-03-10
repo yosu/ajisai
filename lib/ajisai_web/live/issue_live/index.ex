@@ -8,6 +8,7 @@ defmodule AjisaiWeb.IssueLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    user = socket.assigns.current_user
     {
       :ok,
       # 複数のstreamで同じDOM idを使うとDOMのトラッキングがうまくいかなくなるため、
@@ -15,8 +16,8 @@ defmodule AjisaiWeb.IssueLive.Index do
       # DOM idの系列を分けるようにする。
       socket
       |> stream_configure(:closed_issues, dom_id: &"closed-#{&1.id}")
-      |> stream(:issues, Plan.active_issues())
-      |> stream(:closed_issues, Plan.closed_issues())
+      |> stream(:issues, Plan.active_issues_by_user(user))
+      |> stream(:closed_issues, Plan.closed_issues_by_user(user))
     }
   end
 
@@ -77,7 +78,8 @@ defmodule AjisaiWeb.IssueLive.Index do
   end
 
   def handle_event("delete_closed", _value, socket) do
-    deleted_issues = Plan.delete_closed_issues()
+    user = socket.assigns.current_user
+    deleted_issues = Plan.delete_closed_issues_by_user(user)
 
     {:noreply,
      deleted_issues
