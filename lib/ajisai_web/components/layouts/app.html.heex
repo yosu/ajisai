@@ -1,20 +1,3 @@
-<header class="px-4 sm:px-6 lg:px-8">
-  <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
-    <div class="flex items-center gap-4">
-      <a href="/">
-        <img src="/icon.svg" width="36" />
-      </a>
-      <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-        Ajisai Issue Tracker
-      </p>
-    </div>
-    <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-      <a href="/issues" class="hover:text-zinc-700 hover:underline">
-        Issues
-      </a>
-    </div>
-  </div>
-</header>
 <main class="px-4 py-4 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-2xl">
     <.flash_group phx-mount={Process.send_after(self(), :clear_flash, 3000)} flash={@flash} />

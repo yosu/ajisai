@@ -13,7 +13,7 @@ defmodule AjisaiWeb.IssueLiveTest do
   end
 
   describe "Index" do
-    setup [:create_issue]
+    setup [:create_issue, :register_and_log_in_user]
 
     test "lists all issues", %{conn: conn, issue: issue} do
       {:ok, _index_live, html} = live(conn, ~p"/issues")
@@ -44,7 +44,7 @@ defmodule AjisaiWeb.IssueLiveTest do
     test "updates issue in listing", %{conn: conn, issue: issue} do
       {:ok, index_live, _html} = live(conn, ~p"/issues")
 
-      assert index_live |> element("##{issue.id} a[data-test=edit]") |> render_click() =~
+      assert index_live |> element("#issues-#{issue.id} a[data-test=edit]") |> render_click() =~
                "編集"
 
       assert_patch(index_live, ~p"/issues/#{issue}/edit")
@@ -63,7 +63,7 @@ defmodule AjisaiWeb.IssueLiveTest do
     test "close issue in listing", %{conn: conn, issue: issue} do
       {:ok, index_live, _html} = live(conn, ~p"/issues")
 
-      assert index_live |> element("##{issue.id} a[data-test=close]") |> render_click()
+      assert index_live |> element("#issues-#{issue.id} a[data-test=close]") |> render_click()
       assert has_element?(index_live, "#closed-#{issue.id}")
     end
   end
