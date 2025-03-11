@@ -40,20 +40,23 @@ jobs:
         env:
           ELIXIR_VERSION: ${{ steps.setup-beam.outputs.elixir-version }}
           OTP_VERSION: ${{ steps.setup-beam.outputs.otp-version }}
-          KEY_BASE: mix-${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}
+          KEY_BASE: mix-${{ runner.os }}
         with:
           path: |
             deps
             _build
-          key: ${{ env.KEY_BASE }}-${{ hashFiles('**/mix.lock')}}
+          key: ${{ env.KEY_BASE }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ hashFiles('**/mix.lock')}}
           restore-keys: |
-            ${{ env.KEY_BASE }}-
+            ${{ env.KEY_BASE }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-
 
       - name: Get dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: mix deps.get
 
       - run: mix compile --warnings-as-errors
+
+      - name: Run tests
+        run: mix test --trace --warnings-as-errors
 
       - name: Check code is formatted
         run: mix format --check-formatted
