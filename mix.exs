@@ -81,6 +81,11 @@ defmodule Ajisai.MixProject do
         "tailwind ajisai --minify",
         "esbuild ajisai --minify",
         "phx.digest"
+      ],
+      check: [
+        "compile --warnings-as-errors",
+        "format --check-formatted",
+        "deps.unlock --check-unused"
       ]
     ]
   end

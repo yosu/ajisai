@@ -9,6 +9,7 @@ defmodule AjisaiWeb.IssueLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
+
     {
       :ok,
       # 複数のstreamで同じDOM idを使うとDOMのトラッキングがうまくいかなくなるため、

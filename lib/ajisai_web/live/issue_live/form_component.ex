@@ -65,6 +65,7 @@ defmodule AjisaiWeb.IssueLive.FormComponent do
 
   defp save_issue(socket, :new, issue_params) do
     user = socket.assigns.current_user
+
     case Plan.create_issue(Enum.into(%{"user_id" => user.id}, issue_params)) do
       {:ok, issue} ->
         notify_parent({:saved, issue})

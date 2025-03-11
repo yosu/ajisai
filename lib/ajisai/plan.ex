@@ -124,9 +124,7 @@ defmodule Ajisai.Plan do
   """
   def delete_closed_issues_by_user(user) do
     {_count, issues} =
-      Issue.Query.closed()
-      |> Issue.Query.for_user(user)
-      |> select([i], i) |> Repo.delete_all()
+      Issue.Query.closed() |> Issue.Query.for_user(user) |> select([i], i) |> Repo.delete_all()
 
     issues
   end
