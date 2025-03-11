@@ -10,7 +10,7 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    name: Compile with mix test, format & unused deps check
+    name: Compile with mix test, format, credo & unused deps check
     env:
       MIX_ENV: test
     services:
@@ -56,6 +56,9 @@ jobs:
 
       - name: Run tests
         run: mix test --trace --warnings-as-errors
+
+      - name: Static code analysis by credo
+        run: mix credo
 
       - name: Check code is formatted
         run: mix format --check-formatted

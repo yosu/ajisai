@@ -1,7 +1,7 @@
 defmodule Ajisai.Plan.Issue do
   use Ecto.Schema
   import Ecto.Changeset
-  import Ajisai.Validateion
+  import Ajisai.Validation
 
   @primary_key {:id, Ajisai.Id, autogenerate: true, prefix: "iss_"}
   schema "issues" do
