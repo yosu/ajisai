@@ -1,0 +1,62 @@
+name: CI/CD Elixir
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    name: Compile with mix test, format & unused deps check
+    env:
+      MIX_ENV: test
+    services:
+      postgres:
+        image: postgres:15.2
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Elixir
+        uses: erlef/setup-beam@v1.18.2
+        with:
+          version-file: .tool-versions
+          version-type: strict
+
+      - name: Cache deps directory
+        uses: actions/cache@v4
+        id: cache-deps
+        env:
+          ELIXIR_VERSION: ${{ steps.setup-beam.outputs.elixir-version }}
+          OTP_VERSION: ${{ steps.setup-beam.outputs.otp-version }}
+          KEY_BASE: mix-${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ env.KEY_BASE }}-${{ hashFiles('**/mix.lock')}}
+          restore-keys: |
+            ${{ env.KEY_BASE }}-
+
+      - name: Get dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: mix deps.get
+
+      - run: mix compile --warnings-as-errors
+
+      - name: Check code is formatted
+        run: mix format --check-formatted
+
+      - name: Check unused dependencies
+        run: mix deps.unlock --check-unused
