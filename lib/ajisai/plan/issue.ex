@@ -1,4 +1,7 @@
 defmodule Ajisai.Plan.Issue do
+  @moduledoc """
+  Issue schema.
+  """
   use Ecto.Schema
   import Ecto.Changeset
   import Ajisai.Validation

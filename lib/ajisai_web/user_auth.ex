@@ -1,4 +1,7 @@
 defmodule AjisaiWeb.UserAuth do
+  @moduledoc """
+  User authentication.
+  """
   use AjisaiWeb, :verified_routes
 
   import Plug.Conn

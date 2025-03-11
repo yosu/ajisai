@@ -86,7 +86,8 @@ defmodule Ajisai.MixProject do
       check: [
         "compile --warnings-as-errors",
         "format --check-formatted",
-        "deps.unlock --check-unused"
+        "deps.unlock --check-unused",
+        "credo"
       ]
     ]
   end
