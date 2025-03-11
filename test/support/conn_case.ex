@@ -19,15 +19,15 @@ defmodule AjisaiWeb.ConnCase do
 
   using do
     quote do
+      use AjisaiWeb, :verified_routes
+
+      import AjisaiWeb.ConnCase
+      import Phoenix.ConnTest
+      import Plug.Conn
       # The default endpoint for testing
       @endpoint AjisaiWeb.Endpoint
 
-      use AjisaiWeb, :verified_routes
-
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest
-      import AjisaiWeb.ConnCase
     end
   end
 

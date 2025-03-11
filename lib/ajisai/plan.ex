@@ -4,9 +4,9 @@ defmodule Ajisai.Plan do
   """
 
   import Ecto.Query, warn: false
-  alias Ajisai.Repo
 
   alias Ajisai.Plan.Issue
+  alias Ajisai.Repo
 
   @doc """
   Returns the list of issues.

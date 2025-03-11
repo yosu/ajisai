@@ -1,4 +1,5 @@
 defmodule AjisaiWeb.IssueLive.FormComponent do
+  @moduledoc false
   use AjisaiWeb, :live_component
 
   alias Ajisai.Plan

@@ -7,17 +7,14 @@ defmodule Ajisai.Plan.Issue.Query do
   def base, do: Ajisai.Plan.Issue
 
   def active(query \\ base()) do
-    query
-    |> where([i], i.status == :active)
+    where(query, [i], i.status == :active)
   end
 
   def closed(query \\ base()) do
-    query
-    |> where([i], i.status == :closed)
+    where(query, [i], i.status == :closed)
   end
 
   def for_user(query \\ base(), user) do
-    query
-    |> where([i], i.user_id == ^user.id)
+    where(query, [i], i.user_id == ^user.id)
   end
 end

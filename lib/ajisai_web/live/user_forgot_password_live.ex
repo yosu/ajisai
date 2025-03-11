@@ -1,4 +1,5 @@
 defmodule AjisaiWeb.UserForgotPasswordLive do
+  @moduledoc false
   use AjisaiWeb, :live_view
 
   alias Ajisai.Account

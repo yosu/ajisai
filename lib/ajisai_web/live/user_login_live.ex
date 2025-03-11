@@ -1,4 +1,5 @@
 defmodule AjisaiWeb.UserLoginLive do
+  @moduledoc false
   use AjisaiWeb, :live_view
 
   def render(assigns) do

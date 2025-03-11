@@ -3,7 +3,9 @@ defmodule Ajisai.Account.UserToken do
   User token schema definition.
   """
   use Ecto.Schema
+
   import Ecto.Query
+
   alias Ajisai.Account.UserToken
 
   @hash_algorithm :sha256

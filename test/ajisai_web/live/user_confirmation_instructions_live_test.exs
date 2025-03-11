@@ -1,8 +1,8 @@
 defmodule AjisaiWeb.UserConfirmationInstructionsLiveTest do
   use AjisaiWeb.ConnCase, async: true
 
-  import Phoenix.LiveViewTest
   import Ajisai.AccountFixtures
+  import Phoenix.LiveViewTest
 
   alias Ajisai.Account
   alias Ajisai.Repo
