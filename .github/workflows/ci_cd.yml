@@ -39,16 +39,14 @@ jobs:
         uses: actions/cache@v4
         id: cache-deps
         env:
-          ELIXIR_VERSION: ${{ steps.setup-beam.outputs.elixir-version }}
-          OTP_VERSION: ${{ steps.setup-beam.outputs.otp-version }}
-          KEY_BASE: mix-${{ runner.os }}
+          KEY_BASE: mix-${{ runner.os }}-${{ steps.setup-beam.outputs.elixir-version }}-${{ steps.setup-beam.outputs.otp-version }}
         with:
           path: |
             deps
             _build
-          key: ${{ env.KEY_BASE }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ hashFiles('**/mix.lock')}}
+          key: ${{ env.KEY_BASE }}-${{ hashFiles('**/mix.lock')}}
           restore-keys: |
-            ${{ env.KEY_BASE }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-
+            ${{ env.KEY_BASE }}-
 
       - name: Get dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
