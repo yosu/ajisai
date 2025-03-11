@@ -1,4 +1,7 @@
 defmodule Ajisai.Account.UserNotifier do
+  @moduledoc """
+  User mail notifier.
+  """
   import Swoosh.Email
 
   alias Ajisai.Mailer

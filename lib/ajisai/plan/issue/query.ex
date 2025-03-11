@@ -1,4 +1,7 @@
 defmodule Ajisai.Plan.Issue.Query do
+  @moduledoc """
+  A query module for Issue.
+  """
   import Ecto.Query
 
   def base, do: Ajisai.Plan.Issue

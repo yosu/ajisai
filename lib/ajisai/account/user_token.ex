@@ -1,4 +1,7 @@
 defmodule Ajisai.Account.UserToken do
+  @moduledoc """
+  User token schema definition.
+  """
   use Ecto.Schema
   import Ecto.Query
   alias Ajisai.Account.UserToken

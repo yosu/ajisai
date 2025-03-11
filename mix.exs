@@ -59,7 +59,8 @@ defmodule Ajisai.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:short_uuid, "~> 1.0.0", github: "yosu/short_uuid"}
+      {:short_uuid, "~> 1.0.0", github: "yosu/short_uuid"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -85,7 +86,8 @@ defmodule Ajisai.MixProject do
       check: [
         "compile --warnings-as-errors",
         "format --check-formatted",
-        "deps.unlock --check-unused"
+        "deps.unlock --check-unused",
+        "credo"
       ]
     ]
   end

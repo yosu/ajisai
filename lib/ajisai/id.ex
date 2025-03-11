@@ -1,4 +1,7 @@
 defmodule Ajisai.Id do
+  @moduledoc """
+  A Ecto parameterized type of ShortUUID
+  """
   use Ecto.ParameterizedType
 
   def type(_params), do: :string

@@ -1,4 +1,7 @@
-defmodule Ajisai.Validateion do
+defmodule Ajisai.Validation do
+  @moduledoc """
+  Additional Ecto validation
+  """
   import Ecto.Changeset
 
   def validate_not_nil(changeset, fields) do
