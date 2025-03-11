@@ -1,7 +1,7 @@
 import Config
 
-# Only in tests, remove the complexity from the password hashing algorithm
-config :bcrypt_elixir, :log_rounds, 1
+# In test we don't send emails
+config :ajisai, Ajisai.Mailer, adapter: Swoosh.Adapters.Test
 
 # Configure your database
 #
@@ -23,11 +23,8 @@ config :ajisai, AjisaiWeb.Endpoint,
   secret_key_base: "OLst6kxNvc6GaXF9HdhKMrqRcY5VieF2tUaia6Rt6qO4B7VxsHRh0gYRnnu2ksBC",
   server: false
 
-# In test we don't send emails
-config :ajisai, Ajisai.Mailer, adapter: Swoosh.Adapters.Test
-
-# Disable swoosh api client as it is only required for production adapters
-config :swoosh, :api_client, false
+# Only in tests, remove the complexity from the password hashing algorithm
+config :bcrypt_elixir, :log_rounds, 1
 
 # Print only warnings and errors during test
 config :logger, level: :warning
@@ -38,3 +35,6 @@ config :phoenix, :plug_init_mode, :runtime
 # Enable helpful, but potentially expensive runtime checks
 config :phoenix_live_view,
   enable_expensive_runtime_checks: true
+
+# Disable swoosh api client as it is only required for production adapters
+config :swoosh, :api_client, false

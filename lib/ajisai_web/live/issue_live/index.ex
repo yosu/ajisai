@@ -1,10 +1,11 @@
 defmodule AjisaiWeb.IssueLive.Index do
+  @moduledoc false
   use AjisaiWeb, :live_view
 
   alias Ajisai.Plan
   alias Ajisai.Plan.Issue
-  alias AjisaiWeb.IssueLive.IssueList
   alias AjisaiWeb.IssueLive.ClosedIssueList
+  alias AjisaiWeb.IssueLive.IssueList
 
   @impl true
   def mount(_params, _session, socket) do
@@ -83,8 +84,7 @@ defmodule AjisaiWeb.IssueLive.Index do
     deleted_issues = Plan.delete_closed_issues_by_user(user)
 
     {:noreply,
-     deleted_issues
-     |> Enum.reduce(socket, fn deleted_issue, socket ->
+     Enum.reduce(deleted_issues, socket, fn deleted_issue, socket ->
        stream_delete(socket, :closed_issues, deleted_issue)
      end)}
   end

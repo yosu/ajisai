@@ -3,6 +3,7 @@ defmodule Ajisai.Account.User do
   User schema.
   """
   use Ecto.Schema
+
   import Ecto.Changeset
 
   @primary_key {:id, Ajisai.Id, autogenerate: true, prefix: "usr_"}
@@ -130,7 +131,7 @@ defmodule Ajisai.Account.User do
   Confirms the account by setting `confirmed_at`.
   """
   def confirm_changeset(user) do
-    now = DateTime.utc_now() |> DateTime.truncate(:second)
+    now = DateTime.truncate(DateTime.utc_now(), :second)
     change(user, confirmed_at: now)
   end
 

@@ -7,7 +7,7 @@ defmodule Ajisai.Id do
   def type(_params), do: :string
 
   def init(opts) do
-    Enum.into(opts, %{})
+    Map.new(opts)
   end
 
   def cast(id, _params), do: {:ok, id}

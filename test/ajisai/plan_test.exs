@@ -4,10 +4,10 @@ defmodule Ajisai.PlanTest do
   alias Ajisai.Plan
 
   describe "issues" do
-    alias Ajisai.Plan.Issue
-
-    import Ajisai.PlanFixtures
     import Ajisai.AccountFixtures
+    import Ajisai.PlanFixtures
+
+    alias Ajisai.Plan.Issue
 
     @invalid_attrs %{title: nil}
 

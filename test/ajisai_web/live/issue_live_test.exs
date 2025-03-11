@@ -1,8 +1,8 @@
 defmodule AjisaiWeb.IssueLiveTest do
   use AjisaiWeb.ConnCase
 
-  import Phoenix.LiveViewTest
   import Ajisai.PlanFixtures
+  import Phoenix.LiveViewTest
 
   @create_attrs %{title: "some title"}
   @update_attrs %{title: "some updated title"}

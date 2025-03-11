@@ -3,8 +3,9 @@ defmodule Ajisai.Plan.Issue do
   Issue schema.
   """
   use Ecto.Schema
-  import Ecto.Changeset
+
   import Ajisai.Validation
+  import Ecto.Changeset
 
   @primary_key {:id, Ajisai.Id, autogenerate: true, prefix: "iss_"}
   schema "issues" do

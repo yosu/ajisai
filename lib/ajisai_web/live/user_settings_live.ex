@@ -1,4 +1,5 @@
 defmodule AjisaiWeb.UserSettingsLive do
+  @moduledoc false
   use AjisaiWeb, :live_view
 
   alias Ajisai.Account

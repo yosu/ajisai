@@ -1,4 +1,5 @@
 defmodule AjisaiWeb.IssueLive.ClosedIssueList do
+  @moduledoc false
   use AjisaiWeb, :component
 
   attr :issues, :list, required: true

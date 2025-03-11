@@ -1,9 +1,10 @@
 defmodule AjisaiWeb.UserSettingsLiveTest do
   use AjisaiWeb.ConnCase, async: true
 
-  alias Ajisai.Account
-  import Phoenix.LiveViewTest
   import Ajisai.AccountFixtures
+  import Phoenix.LiveViewTest
+
+  alias Ajisai.Account
 
   describe "Settings page" do
     test "renders settings page", %{conn: conn} do

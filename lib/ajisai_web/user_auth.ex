@@ -4,8 +4,8 @@ defmodule AjisaiWeb.UserAuth do
   """
   use AjisaiWeb, :verified_routes
 
-  import Plug.Conn
   import Phoenix.Controller
+  import Plug.Conn
 
   alias Ajisai.Account
 

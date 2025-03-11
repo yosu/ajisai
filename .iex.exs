@@ -1,2 +1,3 @@
-alias Ajisai.Repo
 import Ecto.Query
+
+alias Ajisai.Repo

@@ -4,9 +4,11 @@ defmodule Ajisai.Account do
   """
 
   import Ecto.Query, warn: false
-  alias Ajisai.Repo
 
-  alias Ajisai.Account.{User, UserToken, UserNotifier}
+  alias Ajisai.Account.User
+  alias Ajisai.Account.UserNotifier
+  alias Ajisai.Account.UserToken
+  alias Ajisai.Repo
 
   ## Database getters
 
@@ -38,8 +40,7 @@ defmodule Ajisai.Account do
       nil
 
   """
-  def get_user_by_email_and_password(email, password)
-      when is_binary(email) and is_binary(password) do
+  def get_user_by_email_and_password(email, password) when is_binary(email) and is_binary(password) do
     user = Repo.get_by(User, email: email)
     if User.valid_password?(user, password), do: user
   end
