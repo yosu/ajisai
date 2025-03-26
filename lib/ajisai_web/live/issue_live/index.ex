@@ -4,12 +4,19 @@ defmodule AjisaiWeb.IssueLive.Index do
 
   alias Ajisai.Plan
   alias Ajisai.Plan.Issue
+  alias AjisaiWeb.Endpoint
   alias AjisaiWeb.IssueLive.ClosedIssueList
   alias AjisaiWeb.IssueLive.IssueList
+
+  @issues_topic "issues_topic"
 
   @impl true
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
+
+    if connected?(socket) do
+      Endpoint.subscribe(topic(socket))
+    end
 
     {
       :ok,
@@ -21,6 +28,11 @@ defmodule AjisaiWeb.IssueLive.Index do
       |> stream(:issues, Plan.active_issues_by_user(user))
       |> stream(:closed_issues, Plan.closed_issues_by_user(user))
     }
+  end
+
+  defp topic(socket) do
+    user = socket.assigns.current_user
+    @issues_topic <> ":" <> user.id
   end
 
   @impl true
@@ -48,7 +60,34 @@ defmodule AjisaiWeb.IssueLive.Index do
 
   @impl true
   def handle_info({AjisaiWeb.IssueLive.FormComponent, {:saved, issue}}, socket) do
+    Endpoint.broadcast(topic(socket), "issue_saved", %{issue: issue})
+
+    {:noreply, socket}
+  end
+
+  def handle_info(%{event: "issue_saved", payload: %{issue: issue}}, socket) do
     {:noreply, stream_insert(socket, :issues, issue)}
+  end
+
+  def handle_info(%{event: "issue_closed", payload: %{issue: issue, closed_issue: closed_issue}}, socket) do
+    {:noreply,
+     socket
+     |> stream_delete(:issues, issue)
+     |> stream_insert(:closed_issues, closed_issue)}
+  end
+
+  def handle_info(%{event: "issue_activated", payload: %{issue: issue, closed_issue: closed_issue}}, socket) do
+    {:noreply,
+     socket
+     |> stream_delete(:closed_issues, closed_issue)
+     |> stream_insert(:issues, issue)}
+  end
+
+  def handle_info(%{event: "issue_deleted", payload: %{deleted_issues: deleted_issues}}, socket) do
+    {:noreply,
+     Enum.reduce(deleted_issues, socket, fn deleted_issue, socket ->
+       stream_delete(socket, :closed_issues, deleted_issue)
+     end)}
   end
 
   @impl true
@@ -63,29 +102,26 @@ defmodule AjisaiWeb.IssueLive.Index do
     issue = Plan.get_issue!(id)
     {:ok, closed_issue} = Plan.close_issue(issue)
 
-    {:noreply,
-     socket
-     |> stream_delete(:issues, issue)
-     |> stream_insert(:closed_issues, closed_issue)}
+    Endpoint.broadcast(topic(socket), "issue_closed", %{issue: issue, closed_issue: closed_issue})
+
+    {:noreply, socket}
   end
 
   def handle_event("activate", %{"id" => id}, socket) do
     closed_issue = Plan.get_issue!(id)
     {:ok, issue} = Plan.activate_issue(closed_issue)
 
-    {:noreply,
-     socket
-     |> stream_delete(:closed_issues, closed_issue)
-     |> stream_insert(:issues, issue)}
+    Endpoint.broadcast(topic(socket), "issue_activated", %{issue: issue, closed_issue: closed_issue})
+
+    {:noreply, socket}
   end
 
   def handle_event("delete_closed", _value, socket) do
     user = socket.assigns.current_user
     deleted_issues = Plan.delete_closed_issues_by_user(user)
 
-    {:noreply,
-     Enum.reduce(deleted_issues, socket, fn deleted_issue, socket ->
-       stream_delete(socket, :closed_issues, deleted_issue)
-     end)}
+    Endpoint.broadcast(topic(socket), "issue_deleted", %{deleted_issues: deleted_issues})
+
+    {:noreply, socket}
   end
 end
