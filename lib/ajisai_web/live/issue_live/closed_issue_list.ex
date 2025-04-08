@@ -22,7 +22,7 @@ defmodule AjisaiWeb.IssueLive.ClosedIssueList do
 
   defp issue_item(assigns) do
     ~H"""
-    <li id={@dom_id} class="mb-1">
+    <li id={@dom_id} class="mb-1 hover:bg-zinc-100">
       <.link phx-click={JS.push("activate", value: %{id: @issue.id}) |> hide("##{@dom_id}")}>
         <.icon name="hero-arrow-uturn-left" class="bg-blue-600" />
       </.link>

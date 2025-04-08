@@ -17,7 +17,7 @@ defmodule AjisaiWeb.IssueLive.IssueList do
 
   defp issue_item(assigns) do
     ~H"""
-    <li id={@dom_id} class="mb-1">
+    <li id={@dom_id} class="mb-1 hover:bg-zinc-100">
       <.link
         phx-click={JS.push("close", value: %{id: @issue.id}) |> hide("##{@dom_id}")}
         data-test="close"
