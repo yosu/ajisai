@@ -1,3 +1,3 @@
 # Ajisai
 
-This is a personal to-do application.
+A personal to-do application.
