@@ -3,6 +3,8 @@ defmodule AjisaiWeb.Router do
 
   import AjisaiWeb.UserAuth
 
+  alias Plug.Swoosh.MailboxPreview
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -41,7 +43,7 @@ defmodule AjisaiWeb.Router do
       pipe_through :browser
 
       live_dashboard "/dashboard", metrics: AjisaiWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      forward "/mailbox", MailboxPreview
     end
   end
 

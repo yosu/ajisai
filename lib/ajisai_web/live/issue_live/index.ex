@@ -6,6 +6,7 @@ defmodule AjisaiWeb.IssueLive.Index do
   alias Ajisai.Plan.Issue
   alias AjisaiWeb.Endpoint
   alias AjisaiWeb.IssueLive.ClosedIssueList
+  alias AjisaiWeb.IssueLive.FormComponent
   alias AjisaiWeb.IssueLive.IssueList
 
   @issues_topic "issues_topic"
@@ -59,7 +60,7 @@ defmodule AjisaiWeb.IssueLive.Index do
   end
 
   @impl true
-  def handle_info({AjisaiWeb.IssueLive.FormComponent, {:saved, issue}}, socket) do
+  def handle_info({FormComponent, {:saved, issue}}, socket) do
     Endpoint.broadcast(topic(socket), "issue_saved", %{issue: issue})
 
     {:noreply, socket}

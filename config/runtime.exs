@@ -16,6 +16,8 @@ import Config
 #
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
+alias Swoosh.Adapters.Sendgrid
+
 if System.get_env("PHX_SERVER") do
   config :ajisai, AjisaiWeb.Endpoint, server: true
 end
@@ -63,7 +65,7 @@ if config_env() == :prod do
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
   config :ajisai, Ajisai.Mailer,
-    adapter: Swoosh.Adapters.Sendgrid,
+    adapter: Sendgrid,
     api_key: System.get_env("SENDGRID_API_KEY"),
     compress: true
 

@@ -2,6 +2,8 @@ defmodule AjisaiWeb.IssueLive.ClosedIssueList do
   @moduledoc false
   use AjisaiWeb, :component
 
+  alias Ajisai.Plan.Issue
+
   attr :issues, :list, required: true
 
   def issue_list(assigns) do
@@ -18,7 +20,7 @@ defmodule AjisaiWeb.IssueLive.ClosedIssueList do
   end
 
   attr :dom_id, :string, required: true
-  attr :issue, Ajisai.Plan.Issue, required: true
+  attr :issue, Issue, required: true
 
   defp issue_item(assigns) do
     ~H"""

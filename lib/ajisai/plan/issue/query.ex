@@ -4,7 +4,9 @@ defmodule Ajisai.Plan.Issue.Query do
   """
   import Ecto.Query
 
-  def base, do: Ajisai.Plan.Issue
+  alias Ajisai.Plan.Issue
+
+  def base, do: Issue
 
   def active(query \\ base()) do
     where(query, [i], i.status == :active)

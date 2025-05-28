@@ -1,7 +1,9 @@
 import Config
 
+alias Swoosh.Adapters.Test
+
 # In test we don't send emails
-config :ajisai, Ajisai.Mailer, adapter: Swoosh.Adapters.Test
+config :ajisai, Ajisai.Mailer, adapter: Test
 
 # Configure your database
 #

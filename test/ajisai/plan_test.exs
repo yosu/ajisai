@@ -2,12 +2,11 @@ defmodule Ajisai.PlanTest do
   use Ajisai.DataCase
 
   alias Ajisai.Plan
+  alias Ajisai.Plan.Issue
 
   describe "issues" do
     import Ajisai.AccountFixtures
     import Ajisai.PlanFixtures
-
-    alias Ajisai.Plan.Issue
 
     @invalid_attrs %{title: nil}
 

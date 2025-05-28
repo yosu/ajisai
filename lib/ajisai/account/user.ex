@@ -6,6 +6,8 @@ defmodule Ajisai.Account.User do
 
   import Ecto.Changeset
 
+  alias Ajisai.Account.User
+
   @primary_key {:id, Ajisai.Id, autogenerate: true, prefix: "usr_"}
   schema "users" do
     field :email, :string
@@ -141,7 +143,7 @@ defmodule Ajisai.Account.User do
   If there is no user or the user doesn't have a password, we call
   `Bcrypt.no_user_verify/0` to avoid timing attacks.
   """
-  def valid_password?(%Ajisai.Account.User{hashed_password: hashed_password}, password)
+  def valid_password?(%User{hashed_password: hashed_password}, password)
       when is_binary(hashed_password) and byte_size(password) > 0 do
     Bcrypt.verify_pass(password, hashed_password)
   end

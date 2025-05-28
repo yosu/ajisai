@@ -6,6 +6,7 @@ defmodule Ajisai.Account.UserToken do
 
   import Ecto.Query
 
+  alias Ajisai.Account.User
   alias Ajisai.Account.UserToken
 
   @hash_algorithm :sha256
@@ -22,7 +23,7 @@ defmodule Ajisai.Account.UserToken do
     field :token, :binary
     field :context, :string
     field :sent_to, :string
-    belongs_to :user, Ajisai.Account.User, type: :string
+    belongs_to :user, User, type: :string
 
     timestamps(type: :utc_datetime, updated_at: false)
   end

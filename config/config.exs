@@ -14,7 +14,9 @@ import Config
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :ajisai, Ajisai.Mailer, adapter: Swoosh.Adapters.Local
+alias Swoosh.Adapters.Local
+
+config :ajisai, Ajisai.Mailer, adapter: Local
 
 # Configures the endpoint
 config :ajisai, AjisaiWeb.Endpoint,
@@ -35,7 +37,8 @@ config :ajisai,
 config :esbuild,
   version: "0.17.11",
   ajisai: [
-    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]

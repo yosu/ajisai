@@ -17,8 +17,10 @@ defmodule AjisaiWeb.CoreComponents do
   use Phoenix.Component
   use Gettext, backend: AjisaiWeb.Gettext
 
+  alias Phoenix.HTML.Form
   alias Phoenix.HTML.FormField
   alias Phoenix.LiveView.JS
+  alias Phoenix.LiveView.LiveStream
 
   @doc """
   Renders a modal.
@@ -311,7 +313,7 @@ defmodule AjisaiWeb.CoreComponents do
   def input(%{type: "checkbox"} = assigns) do
     assigns =
       assign_new(assigns, :checked, fn ->
-        Phoenix.HTML.Form.normalize_value("checkbox", assigns[:value])
+        Form.normalize_value("checkbox", assigns[:value])
       end)
 
     ~H"""
@@ -474,7 +476,7 @@ defmodule AjisaiWeb.CoreComponents do
 
   def table(assigns) do
     assigns =
-      with %{rows: %Phoenix.LiveView.LiveStream{}} <- assigns do
+      with %{rows: %LiveStream{}} <- assigns do
         assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)
       end
 
