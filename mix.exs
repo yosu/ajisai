@@ -56,7 +56,8 @@ defmodule Ajisai.MixProject do
       {:bandit, "~> 1.5"},
       {:short_uuid, "~> 1.0.0", github: "yosu/short_uuid"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:quokka, "~> 2.6", only: [:dev, :test], runtime: false}
+      {:quokka, "~> 2.6", only: [:dev, :test], runtime: false},
+      {:tidewave, "~> 0.1", only: :dev}
     ]
   end
 
